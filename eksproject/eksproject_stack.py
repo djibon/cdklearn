@@ -5,7 +5,7 @@ from aws_cdk import(
 )
 
 from hitcounter import HitCounter
-
+from cdk_dynamo_table_viewer import TableViewer
 
 class EksprojectStack(core.Stack):
 
@@ -28,4 +28,12 @@ class EksprojectStack(core.Stack):
         apigw.LambdaRestApi(
             self, "Endpoint",
             handler=hello_with_counter.handler
+        )
+
+        
+        TableViewer(
+            self, "ViewHitCounter",
+            title="Hello Hits",
+            sort_by="-hits",
+            table=hello_with_counter.table
         )
